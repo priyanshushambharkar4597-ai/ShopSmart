@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Production build outputs
+dist/
+frontend/dist/
+dist-ssr/
+frontend/dist-ssr/
+
+# C / CMake build artifacts
+backend/build/
+*.obj
+*.exe
+*.o
+*.a
+*.lib
+*.dll
+CMakeFiles/
+CMakeCache.txt
+build/
+
+# Logs and environment
+logs/
+*.log
+*.local
+.env*
+!.env.example
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Temporary tunnel binaries
+cloudflared.exe

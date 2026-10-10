@@ -1,0 +1,41 @@
+id,name,category,brand,price,rating,popularity,tags
+101,Laptop,Electronics,TechBrand,55000,4.5,85,computer|work|portable
+102,Wireless Earphones,Electronics,SoundMax,1499,4.4,90,wireless|bluetooth|audio
+103,Gaming Mouse,Electronics,GameTech,1999,4.3,75,gaming|mouse|computer
+104,Bluetooth Speaker,Electronics,SoundMax,2499,4.5,88,bluetooth|audio|wireless
+105,Mechanical Keyboard,Electronics,GameTech,3499,4.6,82,gaming|keyboard|computer
+106,Smart Watch,Wearables,FitTech,4999,4.2,80,fitness|smart|bluetooth
+107,Running Shoes,Footwear,SportPro,2999,4.4,87,running|sports|fitness
+108,Casual Shoes,Footwear,UrbanStep,2499,4.1,72,casual|shoes|daily
+109,T Shirt,Fashion,StyleHub,799,4.0,78,cotton|casual|clothing
+110,Jeans,Fashion,DenimCo,1899,4.3,84,denim|casual|clothing
+111,Backpack,Accessories,TravelPro,1599,4.4,81,bags|travel|school
+112,Travel Bag,Accessories,TravelPro,2499,4.5,79,bags|travel|luggage
+113,Coffee Maker,Home,HomeBrew,3999,4.3,76,coffee|kitchen|appliance
+114,Electric Kettle,Home,HomeBrew,1499,4.2,83,kitchen|appliance|electric
+115,Study Lamp,Home,LightTech,999,4.5,74,study|light|desk
+116,Phantom Shogun Oversized Tee,Clothing,KitsuneThreads,999,4.8,95,anime|oversized|streetwear|tshirt
+117,Akuma Strike Heavyweight Hoodie,Clothing,KitsuneThreads,2499,4.9,98,hoodie|anime|winter|streetwear
+118,Cyber Ronin Cargo Hakama,Clothing,NeoTokyoForge,2199,4.6,88,pants|cargo|hakama|streetwear
+119,Spirit Blade Acid-Wash Tee,Clothing,KitsuneThreads,1099,4.7,91,tshirt|anime|vintage|graphic
+120,Chakra Flow Reversible Bomber Jacket,Clothing,NeoTokyoForge,3299,4.9,94,jacket|bomber|anime|outerwear
+121,Shinobi Tactical Crossbody Bag,Accessories,ShinobiArmory,1799,4.7,90,bag|tactical|ninja|crossbody
+122,Kitsune Mask Enamel Pin Badge Set,Accessories,OtakuVault,499,4.8,92,pin|badge|kitsune|collectible
+123,Mecha Pilot Horizon Snapback,Accessories,NeoTokyoForge,899,4.5,83,cap|snapback|mecha|hat
+124,Titan Core Heavy Metal Keychain,Accessories,ShinobiArmory,399,4.6,85,keychain|metal|anime|accessory
+125,Dimensional Portal Canvas Tote,Accessories,KitsuneThreads,699,4.4,79,tote|bag|canvas|eco
+126,Cursed Seal Obsidian Pendant,Jewellery,AstralAesthetic,1299,4.8,93,pendant|necklace|obsidian|cursed
+127,Celestial Dragon Sterling Silver Ring,Jewellery,AstralAesthetic,1499,4.9,96,ring|silver|dragon|anime
+128,Valkyrie Feather Ear Cuff,Jewellery,AstralAesthetic,799,4.6,84,earring|earcuff|anime|feather
+129,Void Core Stainless Steel Bracelet,Jewellery,AstralAesthetic,1199,4.7,87,bracelet|steel|chain|streetwear
+130,Eclipse Sigil Choker Necklace,Jewellery,AstralAesthetic,899,4.5,81,choker|necklace|sigil|goth
+131,Sovereign Knight 1/8 Scale Figure,Collectibles,OtakuVault,4499,4.9,99,figure|statue|scale|collectible
+132,Shadow Assassin Acrylic Standee,Collectibles,OtakuVault,599,4.7,89,standee|acrylic|desk|character
+133,Damascus Steel Katana Letter Opener,Collectibles,ShinobiArmory,1299,4.8,93,katana|sword|desk|metal
+134,Mecha-01 Articulated Vinyl Desk Bot,Collectibles,NeoTokyoForge,2799,4.8,91,vinyl|toy|mecha|desk
+135,Multiverse Hero Chibi Figure Duo,Collectibles,OtakuVault,1599,4.6,86,chibi|figure|collectible|set
+136,Neo-Tokyo Cyberpunk RGB Desk Mat,Decor,NeoTokyoForge,1499,4.8,97,deskmat|mousepad|rgb|decor
+137,Ether Spirit LED Neon Acrylic Lamp,Decor,AstralAesthetic,1899,4.9,95,lamp|neon|led|anime|room
+138,Solar Deity Canvas Hanging Tapestry,Decor,OtakuVault,899,4.6,88,tapestry|wallart|poster|decor
+139,Infinite Void Backlit Wall Sign,Decor,AstralAesthetic,2299,4.8,92,neon|sign|wallart|decor
+140,Astral Samurai Art Scroll Poster,Decor,ShinobiArmory,699,4.7,85,poster|scroll|samurai|art
