@@ -25,4 +25,5 @@ target_include_directories(shopsmart PRIVATE
 target_link_libraries(shopsmart PRIVATE
     sqlite3
     microhttpd
-)
+    m
+)
