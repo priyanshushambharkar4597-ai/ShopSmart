@@ -1,6 +1,9 @@
 # ShopSmart ⚡ // Anime & Pop-Culture Streetwear & Collectibles Store
 
+[![ShopSmart CI](https://github.com/priyanshushambharkar4597-ai/ShopSmart/actions/workflows/ci.yml/badge.svg)](https://github.com/priyanshushambharkar4597-ai/ShopSmart/actions/workflows/ci.yml)
+
 > **A high-energy, pop-culture and anime-inspired full-stack e-commerce application powered by Data Structures & Algorithmic Recommendations.**
+
 
 ---
 
