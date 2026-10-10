@@ -1,0 +1,402 @@
+[
+    {
+        "id":  101,
+        "name":  "Laptop",
+        "category":  "Electronics",
+        "brand":  "TechBrand",
+        "price":  55000,
+        "rating":  4.5,
+        "popularity":  85,
+        "tags":  "computer|work|portable"
+    },
+    {
+        "id":  102,
+        "name":  "Wireless Earphones",
+        "category":  "Electronics",
+        "brand":  "SoundMax",
+        "price":  1499,
+        "rating":  4.4,
+        "popularity":  90,
+        "tags":  "wireless|bluetooth|audio"
+    },
+    {
+        "id":  103,
+        "name":  "Gaming Mouse",
+        "category":  "Electronics",
+        "brand":  "GameTech",
+        "price":  1999,
+        "rating":  4.3,
+        "popularity":  75,
+        "tags":  "gaming|mouse|computer"
+    },
+    {
+        "id":  104,
+        "name":  "Bluetooth Speaker",
+        "category":  "Electronics",
+        "brand":  "SoundMax",
+        "price":  2499,
+        "rating":  4.5,
+        "popularity":  88,
+        "tags":  "bluetooth|audio|wireless"
+    },
+    {
+        "id":  105,
+        "name":  "Mechanical Keyboard",
+        "category":  "Electronics",
+        "brand":  "GameTech",
+        "price":  3499,
+        "rating":  4.6,
+        "popularity":  82,
+        "tags":  "gaming|keyboard|computer"
+    },
+    {
+        "id":  106,
+        "name":  "Smart Watch",
+        "category":  "Wearables",
+        "brand":  "FitTech",
+        "price":  4999,
+        "rating":  4.2,
+        "popularity":  80,
+        "tags":  "fitness|smart|bluetooth"
+    },
+    {
+        "id":  107,
+        "name":  "Running Shoes",
+        "category":  "Footwear",
+        "brand":  "SportPro",
+        "price":  2999,
+        "rating":  4.4,
+        "popularity":  87,
+        "tags":  "running|sports|fitness"
+    },
+    {
+        "id":  108,
+        "name":  "Casual Shoes",
+        "category":  "Footwear",
+        "brand":  "UrbanStep",
+        "price":  2499,
+        "rating":  4.1,
+        "popularity":  72,
+        "tags":  "casual|shoes|daily"
+    },
+    {
+        "id":  109,
+        "name":  "T Shirt",
+        "category":  "Fashion",
+        "brand":  "StyleHub",
+        "price":  799,
+        "rating":  4,
+        "popularity":  78,
+        "tags":  "cotton|casual|clothing"
+    },
+    {
+        "id":  110,
+        "name":  "Jeans",
+        "category":  "Fashion",
+        "brand":  "DenimCo",
+        "price":  1899,
+        "rating":  4.3,
+        "popularity":  84,
+        "tags":  "denim|casual|clothing"
+    },
+    {
+        "id":  111,
+        "name":  "Backpack",
+        "category":  "Accessories",
+        "brand":  "TravelPro",
+        "price":  1599,
+        "rating":  4.4,
+        "popularity":  81,
+        "tags":  "bags|travel|school"
+    },
+    {
+        "id":  112,
+        "name":  "Travel Bag",
+        "category":  "Accessories",
+        "brand":  "TravelPro",
+        "price":  2499,
+        "rating":  4.5,
+        "popularity":  79,
+        "tags":  "bags|travel|luggage"
+    },
+    {
+        "id":  113,
+        "name":  "Coffee Maker",
+        "category":  "Home",
+        "brand":  "HomeBrew",
+        "price":  3999,
+        "rating":  4.3,
+        "popularity":  76,
+        "tags":  "coffee|kitchen|appliance"
+    },
+    {
+        "id":  114,
+        "name":  "Electric Kettle",
+        "category":  "Home",
+        "brand":  "HomeBrew",
+        "price":  1499,
+        "rating":  4.2,
+        "popularity":  83,
+        "tags":  "kitchen|appliance|electric"
+    },
+    {
+        "id":  115,
+        "name":  "Study Lamp",
+        "category":  "Home",
+        "brand":  "LightTech",
+        "price":  999,
+        "rating":  4.5,
+        "popularity":  74,
+        "tags":  "study|light|desk"
+    },
+    {
+        "id":  116,
+        "name":  "Phantom Shogun Oversized Tee",
+        "category":  "Clothing",
+        "brand":  "KitsuneThreads",
+        "price":  999,
+        "rating":  4.8,
+        "popularity":  95,
+        "tags":  "anime|oversized|streetwear|tshirt"
+    },
+    {
+        "id":  117,
+        "name":  "Akuma Strike Heavyweight Hoodie",
+        "category":  "Clothing",
+        "brand":  "KitsuneThreads",
+        "price":  2499,
+        "rating":  4.9,
+        "popularity":  98,
+        "tags":  "hoodie|anime|winter|streetwear"
+    },
+    {
+        "id":  118,
+        "name":  "Cyber Ronin Cargo Hakama",
+        "category":  "Clothing",
+        "brand":  "NeoTokyoForge",
+        "price":  2199,
+        "rating":  4.6,
+        "popularity":  88,
+        "tags":  "pants|cargo|hakama|streetwear"
+    },
+    {
+        "id":  119,
+        "name":  "Spirit Blade Acid-Wash Tee",
+        "category":  "Clothing",
+        "brand":  "KitsuneThreads",
+        "price":  1099,
+        "rating":  4.7,
+        "popularity":  91,
+        "tags":  "tshirt|anime|vintage|graphic"
+    },
+    {
+        "id":  120,
+        "name":  "Chakra Flow Reversible Bomber Jacket",
+        "category":  "Clothing",
+        "brand":  "NeoTokyoForge",
+        "price":  3299,
+        "rating":  4.9,
+        "popularity":  94,
+        "tags":  "jacket|bomber|anime|outerwear"
+    },
+    {
+        "id":  121,
+        "name":  "Shinobi Tactical Crossbody Bag",
+        "category":  "Accessories",
+        "brand":  "ShinobiArmory",
+        "price":  1799,
+        "rating":  4.7,
+        "popularity":  90,
+        "tags":  "bag|tactical|ninja|crossbody"
+    },
+    {
+        "id":  122,
+        "name":  "Kitsune Mask Enamel Pin Badge Set",
+        "category":  "Accessories",
+        "brand":  "OtakuVault",
+        "price":  499,
+        "rating":  4.8,
+        "popularity":  92,
+        "tags":  "pin|badge|kitsune|collectible"
+    },
+    {
+        "id":  123,
+        "name":  "Mecha Pilot Horizon Snapback",
+        "category":  "Accessories",
+        "brand":  "NeoTokyoForge",
+        "price":  899,
+        "rating":  4.5,
+        "popularity":  83,
+        "tags":  "cap|snapback|mecha|hat"
+    },
+    {
+        "id":  124,
+        "name":  "Titan Core Heavy Metal Keychain",
+        "category":  "Accessories",
+        "brand":  "ShinobiArmory",
+        "price":  399,
+        "rating":  4.6,
+        "popularity":  85,
+        "tags":  "keychain|metal|anime|accessory"
+    },
+    {
+        "id":  125,
+        "name":  "Dimensional Portal Canvas Tote",
+        "category":  "Accessories",
+        "brand":  "KitsuneThreads",
+        "price":  699,
+        "rating":  4.4,
+        "popularity":  79,
+        "tags":  "tote|bag|canvas|eco"
+    },
+    {
+        "id":  126,
+        "name":  "Cursed Seal Obsidian Pendant",
+        "category":  "Jewellery",
+        "brand":  "AstralAesthetic",
+        "price":  1299,
+        "rating":  4.8,
+        "popularity":  93,
+        "tags":  "pendant|necklace|obsidian|cursed"
+    },
+    {
+        "id":  127,
+        "name":  "Celestial Dragon Sterling Silver Ring",
+        "category":  "Jewellery",
+        "brand":  "AstralAesthetic",
+        "price":  1499,
+        "rating":  4.9,
+        "popularity":  96,
+        "tags":  "ring|silver|dragon|anime"
+    },
+    {
+        "id":  128,
+        "name":  "Valkyrie Feather Ear Cuff",
+        "category":  "Jewellery",
+        "brand":  "AstralAesthetic",
+        "price":  799,
+        "rating":  4.6,
+        "popularity":  84,
+        "tags":  "earring|earcuff|anime|feather"
+    },
+    {
+        "id":  129,
+        "name":  "Void Core Stainless Steel Bracelet",
+        "category":  "Jewellery",
+        "brand":  "AstralAesthetic",
+        "price":  1199,
+        "rating":  4.7,
+        "popularity":  87,
+        "tags":  "bracelet|steel|chain|streetwear"
+    },
+    {
+        "id":  130,
+        "name":  "Eclipse Sigil Choker Necklace",
+        "category":  "Jewellery",
+        "brand":  "AstralAesthetic",
+        "price":  899,
+        "rating":  4.5,
+        "popularity":  81,
+        "tags":  "choker|necklace|sigil|goth"
+    },
+    {
+        "id":  131,
+        "name":  "Sovereign Knight 1/8 Scale Figure",
+        "category":  "Collectibles",
+        "brand":  "OtakuVault",
+        "price":  4499,
+        "rating":  4.9,
+        "popularity":  99,
+        "tags":  "figure|statue|scale|collectible"
+    },
+    {
+        "id":  132,
+        "name":  "Shadow Assassin Acrylic Standee",
+        "category":  "Collectibles",
+        "brand":  "OtakuVault",
+        "price":  599,
+        "rating":  4.7,
+        "popularity":  89,
+        "tags":  "standee|acrylic|desk|character"
+    },
+    {
+        "id":  133,
+        "name":  "Damascus Steel Katana Letter Opener",
+        "category":  "Collectibles",
+        "brand":  "ShinobiArmory",
+        "price":  1299,
+        "rating":  4.8,
+        "popularity":  93,
+        "tags":  "katana|sword|desk|metal"
+    },
+    {
+        "id":  134,
+        "name":  "Mecha-01 Articulated Vinyl Desk Bot",
+        "category":  "Collectibles",
+        "brand":  "NeoTokyoForge",
+        "price":  2799,
+        "rating":  4.8,
+        "popularity":  91,
+        "tags":  "vinyl|toy|mecha|desk"
+    },
+    {
+        "id":  135,
+        "name":  "Multiverse Hero Chibi Figure Duo",
+        "category":  "Collectibles",
+        "brand":  "OtakuVault",
+        "price":  1599,
+        "rating":  4.6,
+        "popularity":  86,
+        "tags":  "chibi|figure|collectible|set"
+    },
+    {
+        "id":  136,
+        "name":  "Neo-Tokyo Cyberpunk RGB Desk Mat",
+        "category":  "Decor",
+        "brand":  "NeoTokyoForge",
+        "price":  1499,
+        "rating":  4.8,
+        "popularity":  97,
+        "tags":  "deskmat|mousepad|rgb|decor"
+    },
+    {
+        "id":  137,
+        "name":  "Ether Spirit LED Neon Acrylic Lamp",
+        "category":  "Decor",
+        "brand":  "AstralAesthetic",
+        "price":  1899,
+        "rating":  4.9,
+        "popularity":  95,
+        "tags":  "lamp|neon|led|anime|room"
+    },
+    {
+        "id":  138,
+        "name":  "Solar Deity Canvas Hanging Tapestry",
+        "category":  "Decor",
+        "brand":  "OtakuVault",
+        "price":  899,
+        "rating":  4.6,
+        "popularity":  88,
+        "tags":  "tapestry|wallart|poster|decor"
+    },
+    {
+        "id":  139,
+        "name":  "Infinite Void Backlit Wall Sign",
+        "category":  "Decor",
+        "brand":  "AstralAesthetic",
+        "price":  2299,
+        "rating":  4.8,
+        "popularity":  92,
+        "tags":  "neon|sign|wallart|decor"
+    },
+    {
+        "id":  140,
+        "name":  "Astral Samurai Art Scroll Poster",
+        "category":  "Decor",
+        "brand":  "ShinobiArmory",
+        "price":  699,
+        "rating":  4.7,
+        "popularity":  85,
+        "tags":  "poster|scroll|samurai|art"
+    }
+]
