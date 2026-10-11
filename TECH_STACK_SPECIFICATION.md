@@ -76,7 +76,6 @@ ShopSmart/
 ├── .github/workflows/
 │   ├── ci.yml                      # Automated build & testing workflow
 │   └── jekyll-gh-pages.yml         # Automated Vite build & GitHub Pages deployment
-├── DSA_VIVA_QUESTIONS_AND_ANSWERS.md# 20-Question DSA Viva study guide & question bank
 └── TECH_STACK_SPECIFICATION.md     # This comprehensive technical reference document
 ```
 
