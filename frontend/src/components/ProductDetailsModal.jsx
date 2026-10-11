@@ -1,15 +1,5 @@
 import React, { useState } from 'react'
-import {
-  X,
-  Star,
-  Flame,
-  ShoppingCart,
-  Check,
-  ShieldCheck,
-  Truck,
-  RotateCcw,
-  Layers
-} from 'lucide-react'
+import { X, Check, Plus, Minus } from 'lucide-react'
 import ProductArtwork from './ProductArtwork'
 
 export default function ProductDetailsModal({
@@ -30,7 +20,6 @@ export default function ProductDetailsModal({
   const isClothing = (product.category || '').toLowerCase().includes('clothing')
   const sizes = ['S', 'M', 'L', 'XL', '2XL']
 
-  // Find related products in same category
   const relatedProducts = allProducts
     .filter((p) => p.id !== product.id && p.category === product.category)
     .slice(0, 3)
@@ -45,86 +34,83 @@ export default function ProductDetailsModal({
 
   return (
     <div
-      className="modal-backdrop"
+      className="brutalist-modal-overlay"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label={`Product details for ${product.name}`}
+      aria-label={`Product Spec Sheet for ${product.name}`}
     >
-      <div className="product-details-modal" onClick={(e) => e.stopPropagation()}>
-        {/* Close Button */}
-        <button
-          type="button"
-          className="modal-close-btn"
-          onClick={onClose}
-          aria-label="Close product details"
-        >
-          <X size={20} />
-        </button>
+      <div className="brutalist-modal-box" onClick={(e) => e.stopPropagation()}>
+        {/* Modal Top Header Bar */}
+        <div className="modal-top-bar">
+          <div className="modal-header-tag">
+            <span>[SPECIFICATION SHEET // ITEM 0{product.id}]</span>
+          </div>
+          <button
+            type="button"
+            className="modal-close-square-btn"
+            onClick={onClose}
+            aria-label="Close modal"
+          >
+            <X size={16} strokeWidth={3} />
+          </button>
+        </div>
 
-        <div className="details-modal-grid">
-          {/* Left Column: Artwork Showcase */}
-          <div className="details-artwork-col">
+        {/* Modal Main Split Grid */}
+        <div className="modal-split-grid">
+          {/* Left Column: Media Graphic */}
+          <div className="modal-media-col">
             <ProductArtwork product={product} size="large" />
-
-            <div className="details-perks-row">
-              <div className="perk-chip">
-                <Truck size={14} className="accent-lime" />
-                <span>Express Dispatch</span>
-              </div>
-              <div className="perk-chip">
-                <ShieldCheck size={14} className="accent-cyan" />
-                <span>100% Authentic Merch</span>
-              </div>
-              <div className="perk-chip">
-                <RotateCcw size={14} className="accent-pink" />
-                <span>7-Day Size Exchange</span>
-              </div>
+            <div className="artwork-caption-strip">
+              <span>AUTHENTIC SHOPSMART CONCEPT ARCHIVE</span>
+              <span>[QC VERIFIED]</span>
             </div>
           </div>
 
-          {/* Right Column: Specs & Actions */}
-          <div className="details-info-col">
-            <div className="details-header-meta">
-              <span className="details-brand-pill">{product.brand || 'SHOPSMART'}</span>
-              <span className="details-category-pill">{product.category}</span>
-              <span className="details-stock-pill">● IN STOCK</span>
+          {/* Right Column: Technical Spec Table */}
+          <div className="modal-info-col">
+            <div className="modal-meta-row">
+              <span className="brand-badge">[{product.brand?.toUpperCase()}]</span>
+              <span className="cat-badge">{product.category?.toUpperCase()}</span>
             </div>
 
-            <h2 className="details-title">{product.name}</h2>
+            <h2 className="modal-product-title">{product.name}</h2>
 
-            {/* Ratings and Popularity */}
-            <div className="details-metrics-bar">
-              <div className="details-rating-chip">
-                <Star size={14} fill="#fbbf24" stroke="#fbbf24" />
-                <strong>{Number(product.rating || 0).toFixed(1)} / 5.0</strong>
-              </div>
-              <div className="details-pop-chip">
-                <Flame size={14} className="accent-pink" />
-                <span>Popularity Index: <strong>{product.popularity} / 100</strong></span>
-              </div>
+            <div className="modal-price-box">
+              <span className="price-title">RETAIL PRICE (ALL TAXES INCLUDED):</span>
+              <span className="price-big">₹{formatPrice(product.price)}</span>
             </div>
 
-            {/* Price Row */}
-            <div className="details-price-row">
-              <span className="details-currency">₹</span>
-              <span className="details-price-val">{formatPrice(product.price)}</span>
-              <span className="details-tax-note">Inclusive of all duties & taxes</span>
+            {/* Technical Specification Table */}
+            <div className="spec-table-box">
+              <div className="spec-table-row">
+                <span className="spec-col-key">RATING INDEX</span>
+                <span className="spec-col-val">{Number(product.rating || 0).toFixed(1)} / 5.0 (VERIFIED)</span>
+              </div>
+              <div className="spec-table-row">
+                <span className="spec-col-key">POPULARITY</span>
+                <span className="spec-col-val">{product.popularity}% USER AFFINITY</span>
+              </div>
+              <div className="spec-table-row">
+                <span className="spec-col-key">TAG SIGNATURE</span>
+                <span className="spec-col-val">{product.tags || 'ANIME|POP-CULTURE'}</span>
+              </div>
+              <div className="spec-table-row">
+                <span className="spec-col-key">DISPATCH CARRIER</span>
+                <span className="spec-col-val">SPEED POST / BLUEDART (24-48H)</span>
+              </div>
             </div>
 
             {/* Size Selector for Clothing */}
             {isClothing && (
-              <div className="details-size-section">
-                <div className="size-label-row">
-                  <span className="size-label">SELECT FIT SIZE:</span>
-                  <span className="size-guide-hint">Over-sized streetwear cut</span>
-                </div>
-                <div className="size-pills-row">
+              <div className="modal-size-block">
+                <label className="size-label">SELECT SIZE [UNISEX FIT]:</label>
+                <div className="size-options-row">
                   {sizes.map((s) => (
                     <button
                       key={s}
                       type="button"
-                      className={`size-pill ${selectedSize === s ? 'selected' : ''}`}
+                      className={`size-square-btn ${selectedSize === s ? 'selected' : ''}`}
                       onClick={() => setSelectedSize(s)}
                     >
                       {s}
@@ -134,90 +120,69 @@ export default function ProductDetailsModal({
               </div>
             )}
 
-            {/* Tags list */}
-            {product.tags && (
-              <div className="details-tags-section">
-                <span className="tags-label">TAGS & ARCHIVES:</span>
-                <div className="tags-container">
-                  {product.tags.split('|').map((tag) => (
-                    <span key={tag} className="tag-bubble">
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Quantity Selector & Add to Cart Button */}
-            <div className="details-actions-row">
-              <div className="quantity-counter">
+            {/* Quantity Selector */}
+            <div className="modal-qty-block">
+              <label className="qty-label">LOADOUT QUANTITY:</label>
+              <div className="qty-stepper-row">
                 <button
                   type="button"
                   className="qty-btn"
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                   aria-label="Decrease quantity"
                 >
-                  -
+                  <Minus size={14} strokeWidth={3} />
                 </button>
-                <span className="qty-val">{quantity}</span>
+                <span className="qty-value-box">{quantity}</span>
                 <button
                   type="button"
                   className="qty-btn"
-                  onClick={() => setQuantity(quantity + 1)}
+                  onClick={() => setQuantity((q) => Math.min(10, q + 1))}
                   aria-label="Increase quantity"
                 >
-                  +
+                  <Plus size={14} strokeWidth={3} />
                 </button>
               </div>
+            </div>
 
+            {/* Add to Loadout Button */}
+            <div className="modal-action-row">
               <button
                 type="button"
-                className={`details-add-btn ${justAdded ? 'added' : ''}`}
+                className={`modal-submit-add-btn ${justAdded ? 'added' : ''}`}
                 onClick={handleAdd}
                 disabled={isAdding}
               >
                 {justAdded ? (
                   <>
-                    <Check size={18} strokeWidth={3} />
-                    <span>ADDED TO CART</span>
+                    <Check size={16} strokeWidth={3} />
+                    <span>LOADOUT UPDATED ✓</span>
                   </>
                 ) : isAdding ? (
-                  <span>ADDING TO CART...</span>
+                  <span>DISPATCHING TO CART...</span>
                 ) : (
-                  <>
-                    <ShoppingCart size={18} />
-                    <span>ADD TO CART • ₹{formatPrice(Number(product.price) * quantity)}</span>
-                  </>
+                  <span>[+ ADD TO LOADOUT MANIFEST]</span>
                 )}
               </button>
             </div>
           </div>
         </div>
 
-        {/* Related Products in same universe */}
+        {/* Related Drops Sector Row */}
         {relatedProducts.length > 0 && (
-          <div className="related-products-row">
-            <h4 className="related-title">
-              <Layers size={14} className="accent-purple" />
-              <span>MORE FROM {product.category.toUpperCase()}</span>
-            </h4>
-            <div className="related-grid">
+          <div className="modal-related-strip">
+            <div className="related-title-bar">[RELATED SECTOR DROPS]</div>
+            <div className="related-items-row">
               {relatedProducts.map((rel) => (
-                <div
+                <button
                   key={rel.id}
-                  className="related-item-card"
+                  type="button"
+                  className="related-item-cell"
                   onClick={() => onOpenProduct(rel.id)}
-                  role="button"
-                  tabIndex={0}
                 >
-                  <div className="related-thumb">
-                    <ProductArtwork product={rel} />
-                  </div>
-                  <div className="related-info">
-                    <h5 className="related-name">{rel.name}</h5>
-                    <span className="related-price">₹{formatPrice(rel.price)}</span>
-                  </div>
-                </div>
+                  <span className="rel-id">ITEM 0{rel.id}</span>
+                  <span className="rel-name">{rel.name}</span>
+                  <span className="rel-price">₹{formatPrice(rel.price)}</span>
+                </button>
               ))}
             </div>
           </div>

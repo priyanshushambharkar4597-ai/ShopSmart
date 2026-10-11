@@ -1,5 +1,5 @@
 import React from 'react'
-import { Zap, Code2, ArrowUp } from 'lucide-react'
+import { ArrowUp } from 'lucide-react'
 
 export default function Footer({ onSelectCategory }) {
   function scrollToTop() {
@@ -7,104 +7,89 @@ export default function Footer({ onSelectCategory }) {
   }
 
   return (
-    <footer className="site-footer" aria-label="Site Footer">
-      <div className="footer-top-strip">
-        <div className="footer-container">
-          <div className="brand-statement-group">
-            <div className="footer-logo">
-              <Zap size={20} className="accent-purple" />
-              <span>SHOPSMART // スマート</span>
-            </div>
-            <p className="footer-tagline">
-              Premium high-energy anime & pop-culture merchandise engineered with algorithmic excellence.
-            </p>
-          </div>
-
+    <footer className="brutalist-footer-root" aria-label="Site Footer">
+      {/* Top Giant Typographic Bar */}
+      <div className="footer-giant-wordmark-strip">
+        <div className="giant-brand-row">
+          <span className="giant-wordmark">SHOPSMART</span>
           <button
             type="button"
-            className="back-to-top-btn"
+            className="footer-scroll-top-btn"
             onClick={scrollToTop}
             aria-label="Scroll back to top"
           >
-            <span>BACK TO TOP</span>
-            <ArrowUp size={14} />
+            <span>[BACK TO TOP]</span>
+            <ArrowUp size={14} strokeWidth={2.5} />
           </button>
         </div>
       </div>
 
-      <div className="footer-main-grid footer-container">
-        {/* Col 1: Shop Categories */}
-        <div className="footer-col">
-          <h4 className="footer-heading">MERCHANDISE CATEGORIES</h4>
-          <ul className="footer-links-list">
+      {/* Dense 3-Column Spec Grid */}
+      <div className="footer-columns-grid">
+        {/* Col 01: Catalogue Sectors */}
+        <div className="footer-cell">
+          <h4 className="footer-cell-header">[01 / ARCHIVE SECTORS]</h4>
+          <ul className="footer-dense-list">
             <li>
               <button type="button" onClick={() => onSelectCategory('Clothing')}>
-                Clothing (Heavyweight Streetwear)
+                → 01 CLOTHING (280 GSM HEAVYWEIGHT)
               </button>
             </li>
             <li>
               <button type="button" onClick={() => onSelectCategory('Accessories')}>
-                Accessories (Tactical Bags & Pins)
+                → 02 ACCESSORIES (TACTICAL GEAR & PINS)
               </button>
             </li>
             <li>
               <button type="button" onClick={() => onSelectCategory('Jewellery')}>
-                Jewellery (Silver Rings & Talismans)
+                → 03 JEWELLERY (STERLING SILVER & TALISMANS)
               </button>
             </li>
             <li>
               <button type="button" onClick={() => onSelectCategory('Collectibles')}>
-                Collectibles (Scale Figures & Katana)
+                → 04 COLLECTIBLES (SCALE FIGURES & KATANAS)
               </button>
             </li>
             <li>
               <button type="button" onClick={() => onSelectCategory('Decor')}>
-                Decor (RGB Mats & Neon Lamps)
+                → 05 DECOR (RGB NEO-MATS & ACRYLIC LAMPS)
               </button>
             </li>
           </ul>
         </div>
 
-        {/* Col 2: Customer Help & Policies */}
-        <div className="footer-col">
-          <h4 className="footer-heading">CUSTOMER DISPATCH & HELP</h4>
-          <ul className="footer-links-list">
-            <li><span>⚡ Free Express Delivery on orders over ₹999</span></li>
-            <li><span>⛩️ 100% Authentic Original Anime Designs</span></li>
-            <li><span>🛡️ 7-Day Hassle-Free Size Exchange</span></li>
-            <li><span>📦 Real-time Dispatch Tracking</span></li>
-            <li><span>📏 Anime Streetwear Fit & Size Guide</span></li>
+        {/* Col 02: Logistics & Dispatch */}
+        <div className="footer-cell">
+          <h4 className="footer-cell-header">[02 / DISPATCH SPECIFICATIONS]</h4>
+          <ul className="footer-dense-list static-text">
+            <li>DISPATCH HUB: NEW DELHI, BHARAT</li>
+            <li>CARRIER: SPEED POST & BLUEDART EXPRESS</li>
+            <li>FREE DELIVERY THRESHOLD: ORDERS ≥ ₹999</li>
+            <li>RETURN POLICY: 7-DAY DAMAGED EXCHANGE ONLY</li>
+            <li>PACKAGING: WATERPROOF RIGID ARCHIVE MAILERS</li>
           </ul>
         </div>
 
-        {/* Col 3: Project & DSA Credits */}
-        <div className="footer-col dsa-credits-col">
-          <h4 className="footer-heading">PROJECT ARCHITECTURE & CREDITS</h4>
-          <p className="dsa-credits-intro">
-            Built as an advanced Full-Stack E-Commerce platform demonstrating core Data Structures & Algorithms:
-          </p>
-          <div className="dsa-tags-container">
-            <span className="dsa-tech-tag">🌳 Binary Search Tree (O(log n))</span>
-            <span className="dsa-tech-tag">⚡ Chained Hash Table (O(1))</span>
-            <span className="dsa-tech-tag">🔗 Interaction Linked List</span>
-            <span className="dsa-tech-tag">🏆 Max Heap Priority Queue</span>
-            <span className="dsa-tech-tag">💾 C + SQLite Database</span>
-            <span className="dsa-tech-tag">🌐 libmicrohttpd REST API</span>
-            <span className="dsa-tech-tag">⚛️ React 19 + Vite</span>
-          </div>
+        {/* Col 03: Core Architecture & DSA Credit */}
+        <div className="footer-cell">
+          <h4 className="footer-cell-header">[03 / SYSTEM ARCHITECTURE CREDITS]</h4>
+          <ul className="footer-dense-list static-text">
+            <li>ALGORITHMS: BST (SEARCH), HASH (ID), HEAP (RECS)</li>
+            <li>BACKEND ENGINE: C11 + GNU MICROHTTPD 0.9</li>
+            <li>DATA STORE: SQLITE3 RELATIONAL ACID ENGINE</li>
+            <li>CLIENT ENGINE: REACT 19 + VITE + OXLINT</li>
+            <li>DESIGN SYSTEM: RAW BRUTALISM // MONOSPACE SPEC</li>
+          </ul>
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="footer-bottom-bar">
-        <div className="footer-container bottom-bar-inner">
-          <p className="copyright-text">
-            © {new Date().getFullYear()} ShopSmart Inc. All original anime-inspired concept art and designs reserved.
-          </p>
-          <div className="made-with-badge">
-            <span>Engineered with algorithmic precision</span>
-            <Code2 size={13} className="accent-pink" />
-          </div>
+      {/* Bottom Legal / Disclaimer Strip */}
+      <div className="footer-bottom-legal-strip">
+        <div className="legal-left">
+          <span>© {new Date().getFullYear()} SHOPSMART. ALL ORIGINAL CONCEPT DESIGNS AND TRADEMARKS PRESERVED.</span>
+        </div>
+        <div className="legal-right">
+          <span>NO LOREM IPSUM // NO GENERATED TEMPLATES // REAL DATA STRUCTURES</span>
         </div>
       </div>
     </footer>

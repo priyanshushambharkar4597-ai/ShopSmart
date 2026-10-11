@@ -26,7 +26,7 @@ export default function App() {
   // Filters & Tabs
   const [activeCategory, setActiveCategory] = useState('all')
   const [activeTab, setActiveTab] = useState('all') // 'all', 'bestsellers', 'newarrivals'
-  const [sortBy, setSortBy] = useState('popularity-desc') // 'popularity-desc', 'rating-desc', 'price-asc', 'price-desc'
+  const [sortBy, setSortBy] = useState('popularity-desc')
 
   // Selected Product for Details Modal
   const [selectedProduct, setSelectedProduct] = useState(null)
@@ -48,13 +48,11 @@ export default function App() {
   // Toast Notification State
   const [toast, setToast] = useState(null)
 
-  // Show Toast Helper
   function showToast(message, type = 'info') {
     setToast({ message, type })
     setTimeout(() => setToast(null), 3500)
   }
 
-  // Number Formatter
   function formatPrice(price) {
     return Number(price || 0).toLocaleString('en-IN', {
       maximumFractionDigits: 2
@@ -79,7 +77,6 @@ export default function App() {
       } finally {
         setLoadingProducts(false)
       }
-      // Fallback to bundled products
       setAllProducts(defaultProducts)
     }
     loadInitialProducts()
@@ -108,7 +105,7 @@ export default function App() {
         }
       }
     } catch {
-      // Fallback to localStorage
+      // Fallback below
     } finally {
       setLoadingCart(false)
     }
@@ -141,25 +138,21 @@ export default function App() {
       // Fallback below
     }
 
-    // Client-side Max-Heap recommendation fallback
     const targetProducts = allProducts.length > 0 ? allProducts : defaultProducts
     let recs = []
     if (uid === 1) {
-      // Priya's preference: Electronics & Tech Drops (scores 0.72 - 0.26)
       const priyaIds = [105, 103, 106, 117, 136]
       recs = priyaIds.map((id, idx) => ({
         product: targetProducts.find((p) => p.id === id) || targetProducts[idx],
         score: Number((0.75 - idx * 0.11).toFixed(2))
       })).filter((item) => item.product)
     } else if (uid === 2) {
-      // Rahul's preference: Footwear & Streetwear (scores 0.62 - 0.25)
       const rahulIds = [107, 117, 137, 136, 139]
       recs = rahulIds.map((id, idx) => ({
         product: targetProducts.find((p) => p.id === id) || targetProducts[idx],
         score: Number((0.65 - idx * 0.09).toFixed(2))
       })).filter((item) => item.product)
     } else {
-      // General user: Top popular drops
       const sorted = [...targetProducts].sort((a, b) => Number(b.popularity || 0) - Number(a.popularity || 0))
       recs = sorted.slice(0, 5).map((p, idx) => ({
         product: p,
@@ -189,20 +182,19 @@ export default function App() {
           setActiveCategory('all')
           document.getElementById('products-grid-section')?.scrollIntoView({ behavior: 'smooth' })
           if (data.length === 0) {
-            showToast(`No matches found for "${searchTerm}". Try browsing categories!`, 'info')
+            showToast(`NO CATALOGUE ENTRIES MATCH "${searchTerm}".`, 'info')
           } else {
-            showToast(`Found ${data.length} drops matching "${searchTerm}".`, 'success')
+            showToast(`IDENTIFIED ${data.length} SPEC ENTRIES MATCHING "${searchTerm}".`, 'success')
           }
           return
         }
       }
     } catch {
-      // Client-side BST simulation fallback
+      // Fallback
     } finally {
       setSearching(false)
     }
 
-    // Client-side search matching name, tags, brand, category
     const pool = allProducts.length > 0 ? allProducts : defaultProducts
     const localMatches = pool.filter((p) => {
       const nameMatch = (p.name || '').toLowerCase().includes(term)
@@ -215,9 +207,9 @@ export default function App() {
     setActiveCategory('all')
     document.getElementById('products-grid-section')?.scrollIntoView({ behavior: 'smooth' })
     if (localMatches.length === 0) {
-      showToast(`No matches found for "${searchTerm}". Try browsing categories!`, 'info')
+      showToast(`NO CATALOGUE ENTRIES MATCH "${searchTerm}".`, 'info')
     } else {
-      showToast(`Found ${localMatches.length} drops matching "${searchTerm}".`, 'success')
+      showToast(`IDENTIFIED ${localMatches.length} SPEC ENTRIES MATCHING "${searchTerm}".`, 'success')
     }
   }
 
@@ -226,7 +218,7 @@ export default function App() {
     if (!userId) {
       setAuthInitialMode('login')
       setIsAuthModalOpen(true)
-      showToast('Please sign in to add drops to your loadout.', 'info')
+      showToast('USER IDENTITY REQUIRED TO ACCESS SQLITE CART.', 'info')
       return
     }
 
@@ -237,14 +229,13 @@ export default function App() {
       )
       if (response.ok) {
         await loadCart(userId)
-        showToast(`✓ ${productName} added to your loadout!`, 'success')
+        showToast(`[COMMITTED] ${productName} ADDED TO LOADOUT`, 'success')
         return
       }
     } catch {
       // Fallback to localStorage
     }
 
-    // Local storage cart update
     setCart((prev) => {
       const existing = prev.find((item) => item.product_id === productId || item.id === productId)
       let updated = []
@@ -276,7 +267,7 @@ export default function App() {
       }
       return updated
     })
-    showToast(`✓ ${productName} added to your loadout!`, 'success')
+    showToast(`[COMMITTED] ${productName} ADDED TO LOADOUT`, 'success')
   }
 
   // Remove From Cart
@@ -289,11 +280,11 @@ export default function App() {
       )
       if (response.ok) {
         await loadCart(userId)
-        showToast(`${productName} removed from cart.`, 'info')
+        showToast(`[DELETED] ${productName} EXPUNGED FROM MANIFEST`, 'info')
         return
       }
     } catch {
-      // Fallback to localStorage
+      // Fallback
     }
 
     setCart((prev) => {
@@ -307,7 +298,7 @@ export default function App() {
       }
       return updated
     })
-    showToast(`${productName} removed from cart.`, 'info')
+    showToast(`[DELETED] ${productName} EXPUNGED FROM MANIFEST`, 'info')
   }
 
   // Open Product Details Modal
@@ -331,7 +322,7 @@ export default function App() {
   function handleAuthSuccess({ userId: newUid, name: newName }) {
     setUserId(newUid)
     setUserName(newName)
-    showToast(`Welcome to the Guild, ${newName}! (User #${newUid})`, 'success')
+    showToast(`OPERATOR SESSION INITIALIZED // USER #${newUid} (${newName.toUpperCase()})`, 'success')
   }
 
   function handleLogout() {
@@ -339,7 +330,7 @@ export default function App() {
     setUserName('')
     setCart([])
     setRecommendations([])
-    showToast('You have been logged out from ShopSmart.', 'info')
+    showToast('SESSION TERMINATED. USER DISENGAGED.', 'info')
   }
 
   function handleGoHome() {
@@ -409,15 +400,16 @@ export default function App() {
   const featuredProduct = allProducts.find((p) => p.id === 116) || allProducts[0]
 
   return (
-    <div className="shopsmart-app">
-      {/* Toast Notification Bar */}
+    <div className="shopsmart-app brutalist-root">
+      {/* Toast Notification Box */}
       {toast && (
-        <aside className={`toast-notification ${toast.type}`} role="status" aria-live="polite">
+        <aside className={`brutalist-toast ${toast.type}`} role="status" aria-live="polite">
+          <span className="toast-tag">[{toast.type.toUpperCase()}]</span>
           <span className="toast-text">{toast.message}</span>
         </aside>
       )}
 
-      {/* 1. Thin Announcement Bar & Sticky Header */}
+      {/* 1. Header & Navigation */}
       <Navbar
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -435,7 +427,7 @@ export default function App() {
           if (!userId) {
             setAuthInitialMode('login')
             setIsAuthModalOpen(true)
-            showToast('Please sign in to view your loadout cart.', 'info')
+            showToast('SIGN IN TO INSPECT SQLITE LOADOUT CART.', 'info')
           } else {
             setIsCartOpen(true)
           }
@@ -452,7 +444,7 @@ export default function App() {
 
       {/* Main Content Sections */}
       <main>
-        {/* 2. High-Impact Hero Section */}
+        {/* 2. Hero Section */}
         <Hero
           onExploreDrops={() => {
             document.getElementById('products-grid-section')?.scrollIntoView({ behavior: 'smooth' })
@@ -475,137 +467,136 @@ export default function App() {
           products={allProducts}
         />
 
-        {/* 4. Dynamic Product Grids (New Arrivals, Best Sellers, Search Results) */}
+        {/* 4. Catalogue Grid Section */}
         <section
           id="products-grid-section"
-          className="products-grid-section"
+          className="brutalist-catalogue-section"
           aria-label="Catalogue Grid"
         >
-          <div className="section-header-bar">
-            <div>
-              <div className="grid-badge-chip">
-                <span>CATALOGUE ARCHIVE // 40+ ORIGINAL RELEASES</span>
-              </div>
-              <h2 className="grid-main-heading">
+          <div className="catalogue-header-bar">
+            <div className="cat-header-info">
+              <span className="section-index">[03/CATALOGUE ARCHIVE]</span>
+              <h2 className="catalogue-title">
                 {searchResults !== null ? (
-                  <>SEARCH RESULTS FOR "{searchTerm}"</>
+                  `SEARCH SPEC: "${searchTerm.toUpperCase()}"`
                 ) : activeCategory !== 'all' ? (
-                  <>{activeCategory.toUpperCase()} COLLECTION</>
+                  `SECTOR: ${activeCategory.toUpperCase()}`
                 ) : activeTab === 'bestsellers' ? (
-                  <>🔥 BEST SELLERS & TOP RATED</>
+                  'SECTOR: BEST SELLERS & HIGH AFFINITY'
                 ) : activeTab === 'newarrivals' ? (
-                  <>⚡ FRESH NEW ARRIVALS</>
+                  'SECTOR: SEASON 04 NEW ARRIVALS'
                 ) : (
-                  <>ALL GEAR & STREETWEAR</>
+                  'ALL RELEASES // FULL SPEC SHEET'
                 )}
               </h2>
             </div>
 
             {/* Filter Tabs & Sort Controls */}
-            <div className="grid-controls-row">
-              <div className="grid-tabs-group">
+            <div className="catalogue-controls-bar">
+              <div className="catalogue-tab-group">
                 <button
                   type="button"
-                  className={`grid-tab-btn ${activeTab === 'all' && searchResults === null ? 'active' : ''}`}
+                  className={`tab-block-btn ${activeTab === 'all' && searchResults === null ? 'active' : ''}`}
                   onClick={() => {
                     setActiveTab('all')
                     setSearchResults(null)
                   }}
                 >
-                  All Drops ({allProducts.length})
+                  [01] ALL DROPS ({allProducts.length})
                 </button>
                 <button
                   type="button"
-                  className={`grid-tab-btn ${activeTab === 'bestsellers' ? 'active' : ''}`}
+                  className={`tab-block-btn ${activeTab === 'bestsellers' ? 'active' : ''}`}
                   onClick={() => {
                     setActiveTab('bestsellers')
                     setSearchResults(null)
                   }}
                 >
-                  🔥 Best Sellers
+                  [02] BEST SELLERS
                 </button>
                 <button
                   type="button"
-                  className={`grid-tab-btn ${activeTab === 'newarrivals' ? 'active' : ''}`}
+                  className={`tab-block-btn ${activeTab === 'newarrivals' ? 'active' : ''}`}
                   onClick={() => {
                     setActiveTab('newarrivals')
                     setSearchResults(null)
                   }}
                 >
-                  ⚡ New Drops
+                  [03] NEW ARRIVALS
                 </button>
               </div>
 
               {/* Sort Selector */}
-              <div className="sort-select-box">
-                <label htmlFor="sort-select">SORT BY:</label>
+              <div className="catalogue-sort-box">
+                <label htmlFor="sort-select">SORT:</label>
                 <select
                   id="sort-select"
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
+                  className="brutalist-select"
                 >
-                  <option value="popularity-desc">Popularity: High to Low</option>
-                  <option value="rating-desc">Rating: Highest First</option>
-                  <option value="price-asc">Price: Low to High</option>
-                  <option value="price-desc">Price: High to Low</option>
+                  <option value="popularity-desc">POPULARITY: MAX FIRST</option>
+                  <option value="rating-desc">RATING: MAX FIRST</option>
+                  <option value="price-asc">PRICE: ASCENDING</option>
+                  <option value="price-desc">PRICE: DESCENDING</option>
                 </select>
               </div>
             </div>
           </div>
 
-          {/* Active Filter Clear Tag */}
+          {/* Active Filter Strip */}
           {(searchResults !== null || activeCategory !== 'all' || activeTab !== 'all') && (
-            <div className="active-filters-strip">
-              <span>Filtering by: </span>
+            <div className="active-filter-strip">
+              <span className="filter-label">[ACTIVE FILTERS]:</span>
               {activeCategory !== 'all' && (
-                <span className="filter-chip">
-                  Category: {activeCategory}
-                  <button type="button" onClick={() => setActiveCategory('all')}>×</button>
+                <span className="filter-tag">
+                  SECTOR: {activeCategory.toUpperCase()}
+                  <button type="button" onClick={() => setActiveCategory('all')}>[×]</button>
                 </span>
               )}
               {searchResults !== null && (
-                <span className="filter-chip">
-                  Search: "{searchTerm}"
-                  <button type="button" onClick={() => setSearchResults(null)}>×</button>
+                <span className="filter-tag">
+                  QUERY: "{searchTerm.toUpperCase()}"
+                  <button type="button" onClick={() => setSearchResults(null)}>[×]</button>
                 </span>
               )}
               {activeTab !== 'all' && (
-                <span className="filter-chip">
-                  Tab: {activeTab}
-                  <button type="button" onClick={() => setActiveTab('all')}>×</button>
+                <span className="filter-tag">
+                  TAB: {activeTab.toUpperCase()}
+                  <button type="button" onClick={() => setActiveTab('all')}>[×]</button>
                 </span>
               )}
               <button
                 type="button"
-                className="reset-all-filters-btn"
+                className="reset-filters-btn"
                 onClick={handleGoHome}
               >
-                Reset All Filters
+                [RESET ALL]
               </button>
             </div>
           )}
 
-          {/* Products Grid / Empty States */}
+          {/* Products Grid / States */}
           {loadingProducts ? (
-            <div className="grid-loading-box">
-              <div className="spinner-bolt">⚡</div>
-              <p>Summoning products from SQLite database...</p>
+            <div className="catalogue-loading-state">
+              <span className="loading-badge">[I/O BUSY]</span>
+              <p>LOADING SPECIFICATION MATRIX FROM SQLITE DATABASE...</p>
             </div>
           ) : displayedProducts.length === 0 ? (
-            <div className="grid-empty-box">
-              <div className="empty-avatar">⛩️</div>
-              <h3>NO DROPS MATCH THIS CRITERIA</h3>
-              <p>Try resetting the category filter or searching for another keyword.</p>
+            <div className="catalogue-empty-state">
+              <span className="empty-badge">[NULL RESULT]</span>
+              <h3>NO DROPS MATCH THE SPECIFIED QUERY CRITERIA</h3>
+              <p>Re-evaluate keyword string or reset category filter.</p>
               <button
                 type="button"
-                className="grid-reset-btn"
+                className="brutalist-primary-btn"
                 onClick={handleGoHome}
               >
-                Show All Gear
+                <span>SHOW COMPLETE ARCHIVE</span>
               </button>
             </div>
           ) : (
-            <div className="products-card-grid">
+            <div className="catalogue-spreadsheet-grid">
               {displayedProducts.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -619,16 +610,16 @@ export default function App() {
           )}
         </section>
 
-        {/* 5. Mid-Page Promotional Campaign Banner */}
+        {/* 5. Promotional Campaign Poster */}
         <PromoBanner
           onExploreSale={() => {
             setActiveTab('bestsellers')
             document.getElementById('products-grid-section')?.scrollIntoView({ behavior: 'smooth' })
-            showToast('Applied 20% discount code SHINOBI20 to your session!', 'success')
+            showToast('CODE SHINOBI20 COMMITTED TO SESSION.', 'success')
           }}
         />
 
-        {/* 6. Smart Recommendations (DSA Showcase: BST, Hash Table, Linked List, Max Heap) */}
+        {/* 6. Smart DSA Recommendations Showcase */}
         <DsaShowcase
           userId={userId}
           userName={userName}
@@ -643,11 +634,11 @@ export default function App() {
           }}
         />
 
-        {/* 7. Trust / Benefit Indicators */}
+        {/* 7. System Infrastructure Guarantees */}
         <TrustIndicators />
       </main>
 
-      {/* 8. Polished Footer */}
+      {/* 8. Spec Sheet Footer */}
       <Footer
         onSelectCategory={(catId) => {
           setActiveCategory(catId)
@@ -657,7 +648,6 @@ export default function App() {
       />
 
       {/* Modals & Overlays */}
-      {/* Product Details Modal */}
       {selectedProduct && (
         <ProductDetailsModal
           product={selectedProduct}
@@ -669,7 +659,6 @@ export default function App() {
         />
       )}
 
-      {/* Shopping Cart Drawer */}
       <CartDrawer
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}
@@ -680,7 +669,6 @@ export default function App() {
         onGoHome={handleGoHome}
       />
 
-      {/* Authentication Modal */}
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}

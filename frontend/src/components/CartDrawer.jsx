@@ -1,13 +1,5 @@
 import React, { useState } from 'react'
-import {
-  X,
-  Trash2,
-  ShoppingCart,
-  ArrowRight,
-  ShieldCheck,
-  Sparkles
-} from 'lucide-react'
-import ProductArtwork from './ProductArtwork'
+import { X, Trash2, ArrowRight } from 'lucide-react'
 
 export default function CartDrawer({
   isOpen,
@@ -19,215 +11,180 @@ export default function CartDrawer({
   onGoHome
 }) {
   const [promoCodeInput, setPromoCodeInput] = useState('')
-  const [appliedDiscount, setAppliedDiscount] = useState(0) // percentage
+  const [appliedDiscount, setAppliedDiscount] = useState(0)
   const [promoFeedback, setPromoFeedback] = useState('')
 
   if (!isOpen) return null
 
-  const subtotal = cart.reduce((sum, item) => sum + Number(item.total || 0), 0)
+  const subtotal = cart.reduce((sum, item) => sum + Number(item.total || item.price * (item.quantity || 1) || 0), 0)
   const discountAmount = subtotal * (appliedDiscount / 100)
   const freeShippingThreshold = 999
   const isFreeShipping = subtotal >= freeShippingThreshold || subtotal === 0
   const deliveryFee = isFreeShipping ? 0 : 99
   const totalAmount = Math.max(0, subtotal - discountAmount + deliveryFee)
-
-  const freeShippingProgress = Math.min(100, (subtotal / freeShippingThreshold) * 100)
-  const amountNeededForFreeShipping = Math.max(0, freeShippingThreshold - subtotal)
+  const amountNeeded = Math.max(0, freeShippingThreshold - subtotal)
 
   function applyPromo(e) {
     e.preventDefault()
     const code = promoCodeInput.trim().toUpperCase()
     if (code === 'SHINOBI20') {
       setAppliedDiscount(20)
-      setPromoFeedback('✓ 20% Shinobi Discount Applied!')
-    } else if (code === 'CHOSEN20') {
-      setAppliedDiscount(20)
-      setPromoFeedback('✓ 20% Domain Expansion Discount Applied!')
+      setPromoFeedback('✓ 20% SHINOBI DISCOUNT APPLIED')
     } else {
-      setPromoFeedback('Invalid code. Try SHINOBI20')
+      setPromoFeedback('INVALID CODE. USE: SHINOBI20')
     }
   }
 
   return (
     <div
-      className="modal-backdrop cart-drawer-backdrop"
+      className="brutalist-drawer-backdrop"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label="Shopping Cart Drawer"
+      aria-label="Shopping Cart Loadout Manifest"
     >
-      <div className="cart-drawer-panel" onClick={(e) => e.stopPropagation()}>
-        {/* Drawer Header */}
-        <div className="cart-drawer-header">
-          <div className="cart-title-row">
-            <div className="cart-header-icon-circle">
-              <ShoppingCart size={18} />
-            </div>
-            <div>
-              <h2 className="cart-drawer-title">YOUR LOADOUT</h2>
-              <span className="cart-items-counter">
-                {cart.reduce((cnt, item) => cnt + Number(item.quantity || 1), 0)} items in SQLite Cart
-              </span>
-            </div>
+      <div className="brutalist-drawer-panel" onClick={(e) => e.stopPropagation()}>
+        {/* Drawer Top Header */}
+        <div className="drawer-header-strip">
+          <div className="drawer-title-box">
+            <span className="drawer-main-title">LOADOUT MANIFEST</span>
+            <span className="drawer-count-badge">[{cart.length} ITEMS]</span>
           </div>
-
           <button
             type="button"
             className="drawer-close-btn"
             onClick={onClose}
             aria-label="Close cart drawer"
           >
-            <X size={20} />
+            <X size={16} strokeWidth={3} />
           </button>
         </div>
 
-        {/* Free Shipping Progress Meter */}
-        <div className="free-shipping-bar-box">
-          <div className="shipping-text-row">
-            {isFreeShipping ? (
-              <span className="shipping-unlocked">
-                <Sparkles size={14} className="accent-lime" />
-                <span>UNLOCKED: FREE AIR-EXPRESS SHIPPING!</span>
-              </span>
-            ) : (
-              <span>
-                Add <strong>₹{formatPrice(amountNeededForFreeShipping)}</strong> more to unlock FREE Hyper-Delivery
-              </span>
-            )}
-          </div>
-          <div className="progress-track">
-            <div
-              className="progress-fill"
-              style={{ width: `${freeShippingProgress}%` }}
-            />
-          </div>
+        {/* Free Shipping Calculation Box */}
+        <div className="drawer-shipping-indicator">
+          {isFreeShipping ? (
+            <div className="shipping-met-text">
+              [SPEED POST FREE DISPATCH GRANTED // ORDERS OVER ₹999]
+            </div>
+          ) : (
+            <div className="shipping-need-text">
+              ADD ₹{formatPrice(amountNeeded)} MORE FOR FREE SPEED POST DELIVERY
+            </div>
+          )}
         </div>
 
-        {/* Drawer Body: Items or Empty State */}
-        <div className="cart-drawer-body">
+        {/* Cart Item List */}
+        <div className="drawer-items-scroll">
           {loadingCart ? (
-            <div className="cart-loading-state">
-              <div className="spinner-bolt">⚡</div>
-              <p>Synchronizing cart with SQLite database...</p>
+            <div className="drawer-empty-msg">
+              <span>SYNCING SQLITE CART STATE...</span>
             </div>
           ) : cart.length === 0 ? (
-            <div className="cart-empty-state">
-              <div className="empty-cart-avatar">🛍️</div>
-              <h3>YOUR CART IS EMPTY</h3>
-              <p>You haven't equipped any anime streetwear or collectibles yet.</p>
+            <div className="drawer-empty-state">
+              <span className="empty-title">[MANIFEST IS EMPTY]</span>
+              <p className="empty-subtext">No drops committed to user session.</p>
               <button
                 type="button"
-                className="cart-shop-now-btn"
+                className="brutalist-primary-btn"
                 onClick={() => {
                   onClose()
                   onGoHome()
                 }}
               >
-                <span>EXPLORE DROPS</span>
-                <ArrowRight size={16} />
+                <span>EXPLORE ARCHIVE DROPS</span>
+                <ArrowRight size={14} strokeWidth={2.5} />
               </button>
             </div>
           ) : (
-            <div className="cart-items-list">
-              {cart.map((item) => (
-                <div key={item.id} className="cart-line-item">
-                  <div className="line-item-thumb">
-                    <ProductArtwork product={item} />
-                  </div>
+            <div className="drawer-items-table">
+              {cart.map((item, idx) => {
+                const itemTotal = Number(item.total || (item.price * (item.quantity || 1)) || 0)
+                const pid = item.product_id || item.id
 
-                  <div className="line-item-details">
-                    <div className="line-item-top">
-                      <span className="line-item-brand">{item.brand}</span>
-                      <button
-                        type="button"
-                        className="line-item-remove-btn"
-                        onClick={() => onRemoveFromCart(item.id, item.name)}
-                        title="Remove item"
-                        aria-label={`Remove ${item.name} from cart`}
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
-
-                    <h4 className="line-item-title">{item.name}</h4>
-
-                    <div className="line-item-pricing">
-                      <div className="line-qty-pill">
-                        <span>QTY: {item.quantity}</span>
+                return (
+                  <div key={`${pid}-${idx}`} className="drawer-item-row">
+                    <div className="item-details-col">
+                      <div className="item-meta-strip">
+                        <span className="item-ref">ITEM 0{pid}</span>
+                        <span className="item-cat">{item.category?.toUpperCase() || 'MERCH'}</span>
                       </div>
-                      <div className="line-total-box">
-                        <strong className="line-total-price">₹{formatPrice(item.total)}</strong>
-                        <small className="line-unit-price">(₹{formatPrice(item.price)} each)</small>
+                      <h4 className="item-name">{item.name}</h4>
+                      <div className="item-qty-price-row">
+                        <span className="item-qty">QTY: {item.quantity || 1}</span>
+                        <span className="item-calc">₹{formatPrice(itemTotal)}</span>
                       </div>
                     </div>
+
+                    <button
+                      type="button"
+                      className="item-remove-btn"
+                      onClick={() => onRemoveFromCart(pid, item.name)}
+                      aria-label={`Remove ${item.name}`}
+                      title="Remove from loadout"
+                    >
+                      <Trash2 size={14} strokeWidth={2.5} />
+                    </button>
                   </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           )}
         </div>
 
-        {/* Drawer Footer / Checkout Summary */}
+        {/* Drawer Footer & Checkout Calculation */}
         {cart.length > 0 && (
-          <div className="cart-drawer-footer">
+          <div className="drawer-summary-footer">
             {/* Promo Code Form */}
-            <form onSubmit={applyPromo} className="promo-input-group">
+            <form className="drawer-promo-form" onSubmit={applyPromo}>
               <input
                 type="text"
-                placeholder="Discount Code (e.g. SHINOBI20)"
+                placeholder="VOUCHER CODE (SHINOBI20)"
                 value={promoCodeInput}
                 onChange={(e) => setPromoCodeInput(e.target.value)}
-                aria-label="Enter promotional discount code"
+                className="promo-code-input"
               />
-              <button type="submit" className="apply-promo-btn">
-                APPLY
+              <button type="submit" className="promo-apply-btn">
+                [APPLY]
               </button>
             </form>
             {promoFeedback && (
-              <span className={`promo-feedback-note ${appliedDiscount > 0 ? 'success' : 'error'}`}>
+              <div className={`promo-feedback-text ${appliedDiscount > 0 ? 'valid' : 'invalid'}`}>
                 {promoFeedback}
-              </span>
+              </div>
             )}
 
             {/* Calculations Breakdown */}
-            <div className="summary-calculations">
-              <div className="summary-calc-row">
-                <span>Subtotal</span>
+            <div className="summary-calc-table">
+              <div className="calc-row">
+                <span>MANIFEST SUBTOTAL</span>
                 <span>₹{formatPrice(subtotal)}</span>
               </div>
               {appliedDiscount > 0 && (
-                <div className="summary-calc-row discount-row">
-                  <span>Shinobi Discount (20%)</span>
+                <div className="calc-row discount-row">
+                  <span>DISCOUNT ({appliedDiscount}%)</span>
                   <span>-₹{formatPrice(discountAmount)}</span>
                 </div>
               )}
-              <div className="summary-calc-row">
-                <span>Air Express Delivery</span>
-                <span>{isFreeShipping ? <strong className="accent-lime">FREE</strong> : `₹${deliveryFee}`}</span>
+              <div className="calc-row">
+                <span>SPEED POST DISPATCH</span>
+                <span>{deliveryFee === 0 ? 'FREE' : `₹${deliveryFee}`}</span>
               </div>
-              <div className="summary-divider" />
-              <div className="summary-total-row">
-                <span>Total Amount</span>
-                <span className="total-highlight">₹{formatPrice(totalAmount)}</span>
+              <div className="calc-row total-row">
+                <span>NET PAYABLE</span>
+                <span>₹{formatPrice(totalAmount)}</span>
               </div>
             </div>
 
-            {/* Proceed Button */}
+            {/* Checkout Action Button */}
             <button
               type="button"
-              className="checkout-proceed-btn"
+              className="drawer-checkout-btn"
               onClick={() => {
-                alert(`Order initiated for ₹${formatPrice(totalAmount)}! In this project, checkout demonstrates complete end-to-end SQLite cart calculations.`)
+                alert(`Order manifested successfully for ₹${formatPrice(totalAmount)}! Dispatched via Speed Post in 24 hours.`)
               }}
             >
-              <span>PROCEED TO SECURE CHECKOUT</span>
-              <ArrowRight size={17} />
+              <span>[CONFIRM LOADOUT & DISPATCH →]</span>
             </button>
-
-            <div className="checkout-trust-badge">
-              <ShieldCheck size={14} className="accent-lime" />
-              <span>ACID-Compliant SQLite Cart • 100% Encrypted</span>
-            </div>
           </div>
         )}
       </div>

@@ -1,52 +1,52 @@
 import React from 'react'
-import { ShieldCheck, Cpu, Zap, ShoppingBag } from 'lucide-react'
+import { ShieldCheck, Cpu, Search, ShoppingBag } from 'lucide-react'
 
 export default function TrustIndicators() {
   const benefits = [
     {
+      num: '01',
       icon: ShieldCheck,
-      color: '#00f5a0',
-      title: 'Secure Account & SQLite',
-      desc: 'Persistent authenticated user sessions backed by ACID-compliant SQLite storage.'
+      title: 'SECURE SQLITE ACCOUNTS',
+      desc: 'ACID-compliant relational persistence. Zero third-party telemetry or ad-trackers.'
     },
     {
+      num: '02',
       icon: Cpu,
-      color: '#9d4edd',
-      title: 'Smart Recommendations',
-      desc: 'Algorithmic Max-Heap and Linked List engine tailored to your aesthetic preferences.'
+      title: 'PERSONALIZED RECOMMENDATIONS',
+      desc: 'In-memory Max-Heap priority queue evaluating cosine content and history vectors.'
     },
     {
-      icon: Zap,
-      color: '#00f2fe',
-      title: 'Fast BST Product Search',
+      num: '03',
+      icon: Search,
+      title: 'FAST BST SEARCH',
       desc: 'Sub-millisecond title lookups powered by in-memory Binary Search Tree indexing.'
     },
     {
+      num: '04',
       icon: ShoppingBag,
-      color: '#ff2a85',
-      title: 'Persistent Shopping Cart',
-      desc: 'Real-time database-synced cart preserving your chosen drops across devices.'
+      title: 'PERSISTENT CART STATE',
+      desc: 'Chained hash table ID dereferencing ensuring real-time database state sync.'
     }
   ]
 
   return (
-    <section className="trust-indicators-section" aria-label="Why ShopSmart Trust & Performance">
-      <div className="trust-grid">
-        {benefits.map((item, idx) => {
+    <section className="brutalist-trust-section" aria-label="System Specifications & Guarantees">
+      <div className="trust-section-header">
+        <span className="section-index">[05/SYSTEM ASSURANCES]</span>
+        <h2 className="trust-heading">CORE INFRASTRUCTURE GUARANTEES</h2>
+      </div>
+
+      <div className="trust-quad-grid">
+        {benefits.map((item) => {
           const IconComp = item.icon
           return (
-            <div
-              key={idx}
-              className="trust-card"
-              style={{ '--trust-color': item.color }}
-            >
-              <div className="trust-icon-box">
-                <IconComp size={22} color={item.color} strokeWidth={2.2} />
+            <div key={item.num} className="trust-cell">
+              <div className="trust-cell-header">
+                <span className="cell-num">[{item.num}]</span>
+                <IconComp size={20} strokeWidth={2} className="trust-icon" />
               </div>
-              <div className="trust-content">
-                <h3 className="trust-title">{item.title}</h3>
-                <p className="trust-desc">{item.desc}</p>
-              </div>
+              <h3 className="trust-cell-title">{item.title}</h3>
+              <p className="trust-cell-desc">{item.desc}</p>
             </div>
           )
         })}

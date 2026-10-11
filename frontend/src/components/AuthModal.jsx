@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { X, Lock, Mail, User, Zap, ArrowRight, ShieldCheck } from 'lucide-react'
+import { X } from 'lucide-react'
 
 export default function AuthModal({
   isOpen,
@@ -41,15 +41,15 @@ export default function AuthModal({
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || 'Authentication failed. Please check credentials.')
+        throw new Error(data.error || 'AUTHENTICATION FAILED. VERIFY CREDENTIALS.')
       }
 
       onAuthSuccess({
         userId: data.userId,
-        name: data.name || (mode === 'signup' ? name : (email.includes('priya') ? 'Priya' : (email.includes('rahul') ? 'Rahul' : 'Shinobi User')))
+        name: data.name || (mode === 'signup' ? name : (email.includes('priya') ? 'Priya' : (email.includes('rahul') ? 'Rahul' : 'Operator')))
       })
       onClose()
-    } catch (err) {
+    } catch {
       // Fallback for static GitHub Pages hosting mode
       if (email.toLowerCase().includes('priya')) {
         onAuthSuccess({ userId: 1, name: 'Priya' })
@@ -66,7 +66,7 @@ export default function AuthModal({
         onAuthSuccess({ userId: 99, name: detectedName.charAt(0).toUpperCase() + detectedName.slice(1) })
         onClose()
       } else {
-        setErrorMsg(err.message || 'Authentication error. Please try again.')
+        setErrorMsg('AUTHENTICATION TIMEOUT. RE-CHECK FIELDS.')
       }
     } finally {
       setLoading(false)
@@ -75,157 +75,136 @@ export default function AuthModal({
 
   return (
     <div
-      className="modal-backdrop"
+      className="brutalist-modal-overlay"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label="User Authentication"
+      aria-label="User Authentication Specification"
     >
-      <div className="auth-modal-card" onClick={(e) => e.stopPropagation()}>
-        {/* Close Button */}
-        <button
-          type="button"
-          className="modal-close-btn"
-          onClick={onClose}
-          aria-label="Close authentication modal"
-        >
-          <X size={20} />
-        </button>
-
-        {/* Modal Header */}
-        <div className="auth-header">
-          <div className="auth-brand-badge">
-            <Zap size={18} className="bolt-icon" />
-            <span>SHOPSMART CLAN ACCESS</span>
+      <div className="brutalist-auth-box" onClick={(e) => e.stopPropagation()}>
+        {/* Auth Header */}
+        <div className="modal-top-bar">
+          <div className="modal-header-tag">
+            <span>[USER IDENTITY VERIFICATION // SQLITE3]</span>
           </div>
-
-          <h2 className="auth-title">
-            {mode === 'signup' ? 'JOIN THE SHINOBI GUILD' : 'WELCOME BACK, WARRIOR'}
-          </h2>
-
-          <p className="auth-sub">
-            {mode === 'signup'
-              ? 'Unlock personalized Max-Heap streams, persistent SQLite carts, and exclusive anime drop access.'
-              : 'Sign in to access your persistent cart and algorithmic recommendations.'}
-          </p>
-        </div>
-
-        {/* Tab Switcher */}
-        <div className="auth-mode-tabs">
           <button
             type="button"
-            className={`auth-tab ${mode === 'login' ? 'active' : ''}`}
+            className="modal-close-square-btn"
+            onClick={onClose}
+            aria-label="Close auth dialog"
+          >
+            <X size={16} strokeWidth={3} />
+          </button>
+        </div>
+
+        {/* Tab Switcher: Login / Signup */}
+        <div className="auth-tabs-row">
+          <button
+            type="button"
+            className={`auth-tab-btn ${mode === 'login' ? 'active' : ''}`}
             onClick={() => {
               setMode('login')
               setErrorMsg('')
             }}
           >
-            SIGN IN
+            [01 / SIGN IN]
           </button>
           <button
             type="button"
-            className={`auth-tab ${mode === 'signup' ? 'active' : ''}`}
+            className={`auth-tab-btn ${mode === 'signup' ? 'active' : ''}`}
             onClick={() => {
               setMode('signup')
               setErrorMsg('')
             }}
           >
-            CREATE ACCOUNT
+            [02 / REGISTER IDENTITY]
           </button>
         </div>
 
-        {/* Error Alert */}
-        {errorMsg && <div className="auth-error-alert">{errorMsg}</div>}
+        {/* Quick 1-Click Demo Profile Switcher */}
+        <div className="auth-demo-picker-strip">
+          <span className="demo-picker-title">PRE-CONFIGURED OPERATOR PROFILES:</span>
+          <div className="demo-picker-btns">
+            <button
+              type="button"
+              className="demo-profile-btn"
+              onClick={() => fillDemo('priya@shopsmart.dev', 'anime123', 'Priya')}
+            >
+              [PRIYA #1: TECH / AUDIO]
+            </button>
+            <button
+              type="button"
+              className="demo-profile-btn"
+              onClick={() => fillDemo('rahul@shopsmart.dev', 'anime456', 'Rahul')}
+            >
+              [RAHUL #2: STREETWEAR]
+            </button>
+          </div>
+        </div>
+
+        {errorMsg && (
+          <div className="auth-error-banner" role="alert">
+            <span>[ERROR] {errorMsg}</span>
+          </div>
+        )}
 
         {/* Auth Form */}
-        <form onSubmit={handleSubmit} className="auth-form">
+        <form className="auth-form-block" onSubmit={handleSubmit}>
           {mode === 'signup' && (
-            <div className="input-field-group">
-              <label htmlFor="auth-name">NAME / CALLSIGN</label>
-              <div className="input-with-icon">
-                <User size={16} />
-                <input
-                  id="auth-name"
-                  type="text"
-                  required
-                  placeholder="e.g. Kenji Tanaka"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </div>
+            <div className="auth-input-group">
+              <label htmlFor="auth-name">[OPERATOR HANDLE / NAME]</label>
+              <input
+                id="auth-name"
+                type="text"
+                placeholder="E.G. PRIYA SHARMA"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
             </div>
           )}
 
-          <div className="input-field-group">
-            <label htmlFor="auth-email">EMAIL ADDRESS</label>
-            <div className="input-with-icon">
-              <Mail size={16} />
-              <input
-                id="auth-email"
-                type="email"
-                required
-                placeholder="name@domain.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+          <div className="auth-input-group">
+            <label htmlFor="auth-email">[AUTHENTICATION EMAIL]</label>
+            <input
+              id="auth-email"
+              type="email"
+              placeholder="OPERATOR@SHOPSMART.DEV"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
 
-          <div className="input-field-group">
-            <label htmlFor="auth-password">PASSWORD</label>
-            <div className="input-with-icon">
-              <Lock size={16} />
-              <input
-                id="auth-password"
-                type="password"
-                required
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+          <div className="auth-input-group">
+            <label htmlFor="auth-password">[ACCESS KEY / PASSWORD]</label>
+            <input
+              id="auth-password"
+              type="password"
+              placeholder="••••••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
 
           <button
             type="submit"
-            className="auth-submit-btn"
+            className="auth-submit-block-btn"
             disabled={loading}
           >
             {loading ? (
-              <span>AUTHENTICATING...</span>
+              <span>VERIFYING SQLITE CREDENTIALS...</span>
+            ) : mode === 'signup' ? (
+              <span>[COMMIT IDENTITY TO SQLITE →]</span>
             ) : (
-              <>
-                <span>{mode === 'signup' ? 'INITIALIZE ACCOUNT' : 'ENTER GUILD'}</span>
-                <ArrowRight size={17} />
-              </>
+              <span>[AUTHENTICATE SESSION →]</span>
             )}
           </button>
         </form>
 
-        {/* Quick Demo Credentials Autofill */}
-        <div className="demo-fill-strip">
-          <span className="demo-label">ONE-CLICK DEMO ACCOUNTS:</span>
-          <div className="demo-buttons-row">
-            <button
-              type="button"
-              className="demo-chip-btn"
-              onClick={() => fillDemo('priya.demo@shopsmart.local', 'demo-password', 'Priya')}
-            >
-              ⚡ Priya (User #1)
-            </button>
-            <button
-              type="button"
-              className="demo-chip-btn"
-              onClick={() => fillDemo('rahul.demo@shopsmart.local', 'demo-password', 'Rahul')}
-            >
-              ⚔️ Rahul (User #2)
-            </button>
-          </div>
-        </div>
-
-        <div className="auth-footer-note">
-          <ShieldCheck size={13} className="accent-lime" />
-          <span>Encrypted Session • ACID SQLite Backend</span>
+        <div className="auth-footer-fineprint">
+          ACID PERSISTENCE GUARANTEED. HASHED CREDENTIALS STORED RELATIONAL TO USER INTERACTION STREAM.
         </div>
       </div>
     </div>

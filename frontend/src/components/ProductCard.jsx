@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ShoppingCart, Star, Zap, Flame, Award, Sparkles, Check } from 'lucide-react'
+import { Check, Plus } from 'lucide-react'
 import ProductArtwork from './ProductArtwork'
 
 export default function ProductCard({
@@ -11,20 +11,26 @@ export default function ProductCard({
   const [isAdding, setIsAdding] = useState(false)
   const [justAdded, setJustAdded] = useState(false)
 
-  // Determine dynamic badge based on product metrics
   const popularity = Number(product.popularity || 0)
   const rating = Number(product.rating || 0)
   const id = Number(product.id || 0)
 
-  let badge = null
+  // Plain square tags in black or signal red
+  let badgeLabel = null
+  let isRedBadge = false
+
   if (popularity >= 94) {
-    badge = { label: 'BEST SELLER', icon: Flame, color: '#ff2a85', bg: 'rgba(255, 42, 133, 0.18)' }
+    badgeLabel = 'BEST SELLER'
+    isRedBadge = true
   } else if (id >= 120) {
-    badge = { label: 'NEW DROP', icon: Zap, color: '#00f5a0', bg: 'rgba(0, 245, 160, 0.18)' }
+    badgeLabel = 'NEW DROP'
+    isRedBadge = false
   } else if (rating >= 4.7) {
-    badge = { label: 'TOP RATED', icon: Award, color: '#ffb703', bg: 'rgba(255, 183, 3, 0.18)' }
+    badgeLabel = 'TOP RATED'
+    isRedBadge = true
   } else if (popularity >= 85) {
-    badge = { label: 'TRENDING', icon: Sparkles, color: '#00f2fe', bg: 'rgba(0, 242, 254, 0.18)' }
+    badgeLabel = 'TRENDING'
+    isRedBadge = false
   }
 
   async function handleAddClick(e) {
@@ -33,16 +39,16 @@ export default function ProductCard({
     await onAddToCart(product.id, product.name)
     setIsAdding(false)
     setJustAdded(true)
-    setTimeout(() => setJustAdded(false), 1800)
+    setTimeout(() => setJustAdded(false), 1600)
   }
 
   return (
     <article
-      className="anime-product-card"
+      className="brutalist-product-card"
       onClick={() => onOpen(product.id)}
       tabIndex={0}
       role="button"
-      aria-label={`View details for ${product.name}`}
+      aria-label={`View technical spec for ${product.name}`}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault()
@@ -50,78 +56,62 @@ export default function ProductCard({
         }
       }}
     >
-      {/* Top Media Area with Artwork & Floating Badges */}
-      <div className="card-media-wrapper">
-        <ProductArtwork product={product} />
-
-        {badge && (
-          <div
-            className="dynamic-badge"
-            style={{
-              color: badge.color,
-              backgroundColor: badge.bg,
-              borderColor: badge.color
-            }}
-          >
-            <badge.icon size={12} strokeWidth={2.5} />
-            <span>{badge.label}</span>
-          </div>
-        )}
-
-        {/* Popularity Index gauge pill */}
-        <div className="popularity-gauge">
-          <span className="gauge-label">SCORE</span>
-          <span className="gauge-value">{popularity}</span>
-        </div>
+      {/* Top Header Label Strip */}
+      <div className="card-header-strip">
+        <span className="card-item-code">ITEM 0{product.id}</span>
+        <span className="card-cat-label">{product.category?.toUpperCase()}</span>
       </div>
 
-      {/* Product Content Details */}
-      <div className="card-content">
-        <div className="card-meta">
-          <span className="card-brand">{product.brand || 'SHOPSMART'}</span>
-          <span className="card-category-tag">{product.category}</span>
+      {/* Schematic Media Area */}
+      <div className="card-artwork-frame">
+        <ProductArtwork product={product} />
+
+        {/* Square Bordered Badges */}
+        {badgeLabel && (
+          <div className={`card-square-badge ${isRedBadge ? 'badge-red' : 'badge-black'}`}>
+            <span>[{badgeLabel}]</span>
+          </div>
+        )}
+      </div>
+
+      {/* Card Spec Details */}
+      <div className="card-body-block">
+        <div className="card-brand-row">
+          <span className="brand-name">{product.brand?.toUpperCase() || 'SHOPSMART'}</span>
+          <span className="rating-tag">RATING: {Number(product.rating || 0).toFixed(1)}/5.0</span>
         </div>
 
-        <h3 className="card-title" title={product.name}>
+        <h3 className="card-item-title" title={product.name}>
           {product.name}
         </h3>
 
-        {/* Rating and Reviews */}
-        <div className="card-rating-row">
-          <div className="stars-pill">
-            <Star size={13} fill="#fbbf24" stroke="#fbbf24" />
-            <span className="rating-score">{Number(product.rating || 0).toFixed(1)}</span>
-          </div>
-          <span className="rating-count">({Math.floor((popularity * 1.8) + 12)} verified)</span>
-        </div>
-
-        {/* Tags preview */}
+        {/* Tag String */}
         {product.tags && (
-          <div className="card-tags">
+          <div className="card-tags-list">
             {product.tags
               .split('|')
-              .slice(0, 2)
+              .slice(0, 3)
               .map((tag) => (
-                <span key={tag} className="tag-pill">
-                  #{tag}
+                <span key={tag} className="tag-spec-item">
+                  #{tag.toUpperCase()}
                 </span>
               ))}
           </div>
         )}
 
-        {/* Bottom Price and Add to Cart Action */}
-        <div className="card-bottom">
-          <div className="price-container">
-            <span className="currency-symbol">₹</span>
-            <span className="price-amount">{formatPrice(product.price)}</span>
+        {/* Bottom Price & Add Action Grid */}
+        <div className="card-price-action-row">
+          <div className="price-box">
+            <span className="price-label">PRICE (INCL. TAX)</span>
+            <span className="price-val">₹{formatPrice(product.price)}</span>
           </div>
 
           <button
             type="button"
-            className={`card-add-button ${justAdded ? 'added' : ''}`}
+            className={`card-add-btn ${justAdded ? 'just-added' : ''}`}
             onClick={handleAddClick}
             disabled={isAdding}
-            aria-label={`Add ${product.name} to cart`}
+            aria-label={`Add ${product.name} to loadout`}
           >
             {justAdded ? (
               <>
@@ -132,7 +122,7 @@ export default function ProductCard({
               <span>...</span>
             ) : (
               <>
-                <ShoppingCart size={14} />
+                <Plus size={14} strokeWidth={3} />
                 <span>ADD</span>
               </>
             )}
