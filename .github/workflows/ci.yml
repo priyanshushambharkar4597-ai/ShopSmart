@@ -116,19 +116,3 @@ jobs:
           path: backend/build/shopsmart
           retention-days: 7
 
-  # =========================================================
-  # 3. NATIVE GITHUB PAGES DEPLOYMENT
-  # =========================================================
-  deploy-pages:
-    name: Deploy Native GitHub Pages
-    if: github.ref == 'refs/heads/main'
-    needs: [ frontend-ci ]
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
