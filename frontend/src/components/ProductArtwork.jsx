@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 export default function ProductArtwork({ product, size = 'default' }) {
+  const [imgError, setImgError] = useState(false)
   const category = (product?.category || '').toLowerCase()
   const tags = (product?.tags || '').toLowerCase()
   const id = Number(product?.id || 101)
+  const imageUrl = product?.image
 
   const isLarge = size === 'large'
-  const height = isLarge ? 320 : 220
+  const height = isLarge ? 340 : 230
 
   // Category archetype configuration (strict brutalist: black, white, signal red)
   let catCode = 'APP-01'
@@ -43,6 +45,109 @@ export default function ProductArtwork({ product, size = 'default' }) {
   const isRedAccented = id % 3 === 0
   const isReverseBlack = id % 2 === 0
 
+  // If real merchandise photo is provided and valid
+  if (imageUrl && !imgError) {
+    return (
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: `${height}px`,
+          backgroundColor: '#000000',
+          borderBottom: '2px solid #000000',
+          overflow: 'hidden',
+          userSelect: 'none'
+        }}
+        aria-hidden="true"
+      >
+        <img
+          src={imageUrl}
+          alt={product.name || 'Merchandise'}
+          loading="lazy"
+          onError={() => setImgError(true)}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+            filter: 'contrast(1.08) brightness(0.96)',
+            transition: 'none'
+          }}
+        />
+
+        {/* Top Header Strip with Metadata */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '8px',
+            left: '8px',
+            right: '8px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            zIndex: 2,
+            fontFamily: "'Space Mono', monospace",
+            fontSize: '10px',
+            fontWeight: 700,
+            letterSpacing: '0.05em'
+          }}
+        >
+          <span
+            style={{
+              backgroundColor: isRedAccented ? '#FF2A00' : '#000000',
+              color: '#FFFFFF',
+              padding: '2px 6px',
+              lineHeight: 1.2,
+              border: '1px solid #000000'
+            }}
+          >
+            {catCode}
+          </span>
+          <span
+            style={{
+              backgroundColor: '#000000',
+              color: '#FFFFFF',
+              padding: '2px 6px',
+              lineHeight: 1.2,
+              border: '1px solid #000000'
+            }}
+          >
+            REF #{id}
+          </span>
+        </div>
+
+        {/* Bottom Spec Strip */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.90)',
+            color: '#FFFFFF',
+            padding: '4px 8px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            fontFamily: "'Space Mono', monospace",
+            fontSize: '9px',
+            letterSpacing: '0.04em',
+            borderTop: '1px solid #000000',
+            zIndex: 2
+          }}
+        >
+          <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '75%' }}>
+            {spec}
+          </span>
+          <span style={{ color: isRedAccented ? '#FF2A00' : '#FFFFFF', fontWeight: 700, flexShrink: 0, marginLeft: '4px' }}>
+            [AUTHENTIC]
+          </span>
+        </div>
+      </div>
+    )
+  }
+
+  // Fallback: Pure Raw Brutalist Blueprint Schematic Artwork
   return (
     <div
       style={{

@@ -68,7 +68,14 @@ export default function App() {
         if (response.ok) {
           const data = await response.json()
           if (Array.isArray(data) && data.length > 0) {
-            setAllProducts(data)
+            const enriched = data.map((p) => {
+              const fallback = defaultProducts.find((dp) => dp.id === p.id)
+              return {
+                ...p,
+                image: p.image || fallback?.image || ''
+              }
+            })
+            setAllProducts(enriched)
             return
           }
         }
